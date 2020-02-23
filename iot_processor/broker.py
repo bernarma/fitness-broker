@@ -55,10 +55,16 @@ class Broker:
             self.__connect_mqtt_broker()
         else :
             print ("Disconnected successfully")
-            self.client.loop_stop()
+            #self.__disable_command_receiver()
+            self._client.loop_stop()
     
     def __on_publish(self, client, userdata, result):
         print(f"Data published with result code {result}")
+
+    def stop(self):
+        self.__disable_command_receiver()
+        self._queue.join()
+        self._client.disconnect()
 
     def start(self):
         # spawn worker thread to process command queue

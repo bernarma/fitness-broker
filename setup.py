@@ -20,7 +20,9 @@ setuptools.setup(
     ],
     python_requires='>=3.6',
     install_requires=[
-        'pyserial == 2.5',
-        'paho-mqtt == 1.5.0'
+        'pyserial',
+        'paho-mqtt',
+        'protobuf',
+        'configargparse'
     ]
 )

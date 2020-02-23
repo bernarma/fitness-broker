@@ -1,29 +1,29 @@
-import argparse
 import queue
 import sys
 import signal
 import time
+import configargparse
 
 from iot_processor.broker import Broker
 
-# https://stackoverflow.com/questions/5055042/whats-the-best-practice-using-a-settings-file-in-python
-
-def signal_handler(sig, frame):
-    print('You pressed Ctrl+C!')
-    sys.exit(0)
-
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--foo', help='foo help')
-    args = parser.parse_args()
+    p = configargparse.ArgParser(default_config_files=['/etc/app/conf.d/*.conf', '~/iot.config'])
+    p.add('-c', '--config', required=True, is_config_file=True, help='config file path')
+    p.add('--mqtt_host', default='localhost', help='MQTT server hostname')
+    p.add('--mqtt_port', type=int, default=1883, help='MQTT server port number')
+    options = p.parse_args()
 
-    # TODO: externalise into a configuration file from args
-    broker = Broker(hostname = "localhost", port = 1883)
+    broker = Broker(hostname = options.mqtt_host, port = options.mqtt_port)
+
+    def signal_handler(sig, frame):
+        print('You pressed Ctrl+C!')
+        broker.stop()
+        sys.exit(0)
+
     broker.start()
-
     signal.signal(signal.SIGINT, signal_handler)
-
     print('Press Ctrl+C')
+
     try:
         while True:
             signal.pause()

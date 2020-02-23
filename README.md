@@ -6,6 +6,8 @@ to write your content.
 
 To run tests: python -m unittest test.test_main
 
+To run main program: python -m iot_processor.main -c iot.config
+
 
 Before running the test - start mosquitto (assume it's localhost 1883)
 
