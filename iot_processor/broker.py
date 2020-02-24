@@ -2,6 +2,8 @@ from threading import Thread
 
 import paho.mqtt.client as mqtt
 import queue
+import time
+import iot_processor.messages.example_pb2 as pb2
 
 class Broker:
 
@@ -22,6 +24,7 @@ class Broker:
         self._port = port
         self._queue = queue.Queue()
         self._client = mqtt.Client()
+        self._connected = False
 
     def __connect_mqtt_broker(self):
         self.client.connect(self.hostname, self.port, 60)
@@ -33,20 +36,34 @@ class Broker:
     def __worker(self):
         while True:
             item = self._queue.get()
-            print(f"Processing Item: {item}")
 
-            # TODO: process item and send to target MQTT topic: do_work(item)
-            self.client.publish("paho/test/single", item)
-            # TODO: need to handle a failure to publish if the broker is down for whatever reason
+            try:
+                print(f"Processing Item: {item}")
+
+                # TODO: process item and send to target MQTT topic: do_work(item)
+                sample = pb2.Person()
+                sample.id = 1234
+                to_client = sample.SerializeToString()
+                print(to_client)
+                
+                self.client.publish("paho/test/single", to_client)
+                
+                # TODO: need to handle a failure to publish if the broker is down for whatever reason
+            except:
+                pass
             
             self._queue.task_done()
             
     def __on_connect(self, client, userdata, flags, rc):
         print(f"Connected with result code {rc}")
-        self.client.subscribe("$SYS/#") # TODO: externalise into configuration
+        
+        if rc==0:
+            self._connected = True
+            self.client.subscribe("$SYS/#") # TODO: externalise into configuration
     
     def __on_message(self, client, userdata, msg):
         print(f"{msg.topic} {msg.payload}")
+        self._queue.put(msg.payload)
     
     def __on_disconnect(self, client, userdata, rc=0):
         print(f"Disconnected with result code {rc}")
@@ -55,8 +72,8 @@ class Broker:
             self.__connect_mqtt_broker()
         else :
             print ("Disconnected successfully")
-            #self.__disable_command_receiver()
             self._client.loop_stop()
+            self._connected = False
     
     def __on_publish(self, client, userdata, result):
         print(f"Data published with result code {result}")
@@ -65,6 +82,9 @@ class Broker:
         self.__disable_command_receiver()
         self._queue.join()
         self._client.disconnect()
+        
+        while self._connected: # wait until disconnected
+            time.sleep(1)
 
     def start(self):
         # spawn worker thread to process command queue
