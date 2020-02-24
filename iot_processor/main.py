@@ -1,4 +1,5 @@
 import queue
+import logging
 import sys
 import signal
 import time
@@ -13,6 +14,7 @@ if __name__ == '__main__':
     p.add('--mqtt_port', type=int, default=1883, help='MQTT server port number')
     options = p.parse_args()
 
+    logging.basicConfig(level=logging.DEBUG, format='%(relativeCreated)6d %(threadName)s %(message)s')
     broker = Broker(hostname = options.mqtt_host, port = options.mqtt_port)
 
     def signal_handler(sig, frame):
@@ -22,6 +24,7 @@ if __name__ == '__main__':
 
     broker.start()
     signal.signal(signal.SIGINT, signal_handler)
+    #logging.info('Press Ctrl+C')
     print('Press Ctrl+C')
 
     try:

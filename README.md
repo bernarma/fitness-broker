@@ -13,6 +13,14 @@ Before running the test - start mosquitto (assume it's localhost 1883)
 
 Ubuntu: install "mosquitto" package
 
+TODO
+---
+** Create systemd Service **
+** Create Web Application based on Vue.js to listen to the MQTT Websocket **
+** Add protobuf commands to start and shutdown the processing loop **
+** Add configuration file for mosquitto to listen for MQTT and websocket traffic **
+** Implement BTLE and ANT+ (support for HRM, Cadence, Speed, Power, ANT-FEC, FTMS) **
+
 
 Example code to encapsulate the properties of self to the class - maybe do that for our other 2 threads
 
