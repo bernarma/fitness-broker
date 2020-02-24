@@ -14,6 +14,10 @@ Before running the test - start mosquitto (assume it's localhost 1883)
 Ubuntu: install "mosquitto" package
 
 
+Generate protobuf files:
+
+C:\Develop\protoc-3.11.4-win64\bin\protoc.exe --proto_path .\iot_processor\messages -I C:\Develop\mtns_iot iot_processor\messages\*.proto  --python_out=iot_processor\messages
+
 Example code to encapsulate the properties of self to the class - maybe do that for our other 2 threads
 
 class workerthread(threading.Thread):
