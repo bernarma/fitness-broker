@@ -4,8 +4,7 @@ import sys
 import signal
 import time
 import configargparse
-
-from iot_processor.broker import Broker
+from iot_processor.application import Application
 
 if __name__ == '__main__':
     p = configargparse.ArgParser(default_config_files=['/etc/app/conf.d/*.conf', '~/iot.config'])
@@ -15,22 +14,6 @@ if __name__ == '__main__':
     options = p.parse_args()
 
     logging.basicConfig(level=logging.DEBUG, format='%(relativeCreated)6d %(threadName)s %(message)s')
-    broker = Broker(hostname = options.mqtt_host, port = options.mqtt_port)
 
-    def signal_handler(sig, frame):
-        print('You pressed Ctrl+C!')
-        broker.stop()
-        sys.exit(0)
-
-    broker.start()
-    signal.signal(signal.SIGINT, signal_handler)
-    #logging.info('Press Ctrl+C')
-    print('Press Ctrl+C')
-
-    try:
-        while True:
-            signal.pause()
-    except AttributeError:
-        # signal.pause() is missing for Windows; wait 1ms and loop instead
-        while True:
-            time.sleep(1)
+    app = Application(options)
+    app.MainLoop()
