@@ -40,7 +40,6 @@ class Broker:
             try:
                 print(f"Processing Item: {item}")
 
-                # TODO: process item and send to target MQTT topic: do_work(item)
                 sample = pb2.Person()
                 sample.id = 1234
                 to_client = sample.SerializeToString()
@@ -48,8 +47,7 @@ class Broker:
                 
                 self.client.publish("paho/test/single", to_client)
                 
-                # TODO: need to handle a failure to publish if the broker is down for whatever reason
-            except:
+            except: # log error for malformed message
                 pass
             
             self._queue.task_done()
