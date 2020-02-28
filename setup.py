@@ -18,11 +18,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
-    install_requires=[
-        'pyserial',
-        'paho-mqtt',
-        'protobuf',
-        'configargparse'
-    ]
+    python_requires='>=3.6'
 )
