@@ -26,7 +26,18 @@ Generate protobuf files:
 
 C:\Develop\protoc-3.11.4-win64\bin\protoc.exe --proto_path .\iot_processor\messages -I C:\Develop\mtns_iot iot_processor\messages\*.proto  --python_out=iot_processor\messages
 
+Create SystemD Service (Python)
+https://github.com/torfsen/python-systemd-tutorial
+
+
+Install mosquitto on Raspberry PI
+---
+sudo apt update
+sudo apt install -y mosquitto mosquitto-clients
+sudo systemctl enable mosquitto.service
+=======
 JS framework for Web 3D: https://www.babylonjs.com/
+
 
 Installing Module on RaspberyPi
 ---
