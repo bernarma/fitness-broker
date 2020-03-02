@@ -2,15 +2,20 @@
   <div class="home">
     <p v-if="isConnected">We're connected to the server!</p>
     <p>Message from server: "{{socketMessage}}"</p>
-    <button @click="clickPublish()">Publish</button>
+    <button @click="clickPublish();">Publish</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
+const protobuf = require('protobufjs');
+
 export default {
   name: 'Home',
   data() {
     return {
+      person: null,
       isConnected: false,
       socketMessage: '',
     };
@@ -23,8 +28,11 @@ export default {
     'param/#': function () {
       console.log('param/#');
     },
-    'param/param/param/test': function () {
-      console.log('param/param/param/test');
+    'param/param/param/test': function (val) {
+      console.log(val.length);
+      const p1 = this.person.decode(val);
+      console.log(p1);
+      console.log(`param/param/param/test ${val}`);
     },
     'template/+': function (data, topic) {
       if (topic.split('/').pop() === '12345') {
@@ -40,6 +48,11 @@ export default {
 
   mounted() {
     this.$mqtt.subscribe('param/param/param/test');
+
+    axios({ method: 'get', url: 'json/messages.json' }).then((res) => {
+      const root = protobuf.Root.fromJSON(res.data);
+      this.person = root.lookupType('iot_processor.messages.Person');
+    });
   },
 
   methods: {

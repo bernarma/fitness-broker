@@ -72,9 +72,11 @@ https://github.com/nodejs/node-gyp#on-windows
 See for permissions to access ANT+ USB and project to use GPIO in RPI+
 https://www.instructables.com/id/Using-Zwift-With-Nearly-Any-Fitness-Device/
 
+In JS Client - to generate PBJS files - .\node_modules\.bin\pbjs
+
 TODO
 ===
 * Test Tacx Ant+ USB
 * Fork PyAnt with changes to support Python 3
-
+* Add protobuf implementation into VueJS: https://github.com/fengxianqi/front_end-demos/tree/master/src/vue-protobuf
 
