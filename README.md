@@ -63,6 +63,18 @@ Mosquitto on Raspberry PI
 - https://theembeddedlab.com/tutorials/install-mosquitto-on-a-raspberry-pi/
 
 
+Allow RemoteSigned Scripts - PS1
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+For now this is not needed - NodeGyp (possibly need when creating website/dashboard)
+https://github.com/nodejs/node-gyp#on-windows
+
+See for permissions to access ANT+ USB and project to use GPIO in RPI+
+https://www.instructables.com/id/Using-Zwift-With-Nearly-Any-Fitness-Device/
+
 TODO
 ===
 * Test Tacx Ant+ USB
+* Fork PyAnt with changes to support Python 3
+
+

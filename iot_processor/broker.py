@@ -45,7 +45,7 @@ class Broker:
                 to_client = sample.SerializeToString()
                 print(to_client)
                 
-                self.client.publish("paho/test/single", to_client)
+                self.client.publish("param/param/param/test", to_client)
                 
             except: # log error for malformed message
                 pass

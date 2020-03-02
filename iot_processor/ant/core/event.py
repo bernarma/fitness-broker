@@ -4,7 +4,7 @@ MAX_MSG_QUEUE = 25
 import _thread
 import time
 
-from .constants import *
+#from .constants import *
 from .message import Message, ChannelEventMessage
 from .exceptions import MessageError
 
@@ -19,8 +19,9 @@ def ProcessBuffer(buffer_):
             buffer_ = buffer_[len(msg.getPayload()) + 4:]
             messages.append(msg)
         except MessageError as e:
-            #TODO: debugging print(e)
             if e.internal == "CHECKSUM":
+                print('--- message error (checksum) ---')
+                print(e) # check if the next statement works
                 buffer_ = buffer_[ord(buffer_[1]) + 4:]
             else:
                 break
@@ -51,7 +52,7 @@ def EventPump(evm):
             for callback in evm.callbacks:
                 try:
                     callback.process(message)
-                except Exception as e:
+                except Exception:# as e:
                     pass
 
         evm.callbacks_lock.release()
