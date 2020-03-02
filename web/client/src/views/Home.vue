@@ -30,9 +30,12 @@ export default {
     },
     'param/param/param/test': function (val) {
       console.log(val.length);
-      const p1 = this.person.decode(val);
-      console.log(p1);
-      console.log(`param/param/param/test ${val}`);
+      try {
+        const p1 = this.person.decode(val);
+        console.log(`param/param/param/test ${p1.id} ${p1.name}`);
+      } catch (error) {
+        console.error('Invalid message', error);
+      }
     },
     'template/+': function (data, topic) {
       if (topic.split('/').pop() === '12345') {
@@ -57,8 +60,8 @@ export default {
 
   methods: {
     clickPublish() {
-      // Send the "pingServer" event to the server.
-      this.$mqtt.publish('param/param/param/test', 'hello');
+      const message = this.person.create({ id: 1234, name: 'sample name' });
+      this.$mqtt.publish('param/param/param/test', this.person.encode(message).finish());
     },
   },
 };

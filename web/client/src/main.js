@@ -4,7 +4,7 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 
-Vue.use(VueMqtt, 'ws://localhost:9001/ws', { clientId: 'WebClient-12123789123' });
+Vue.use(VueMqtt, 'ws://localhost:9001/ws');
 
 Vue.config.productionTip = false;
 
