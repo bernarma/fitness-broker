@@ -1,4 +1,5 @@
 from threading import Thread
+from iot_processor.repeated_timer import RepeatedTimer
 
 import paho.mqtt.client as mqtt
 import queue
@@ -36,7 +37,7 @@ class Broker:
         self._client.loop_start()
 
     def __disable_command_receiver(self):
-        self._client.unsubscribe("$SYS/#")
+        self._heartbeat.stop()
 
     def __worker(self):
         while True:
@@ -62,7 +63,7 @@ class Broker:
         
         if rc==0:
             self._connected = True
-            self.client.subscribe("$SYS/#") # TODO: externalise into configuration
+            self._heartbeat = RepeatedTimer(1, self._send_heartbeat)
     
     def __on_message(self, client, userdata, msg):
         print(f"{msg.topic} {msg.payload}")
@@ -80,6 +81,10 @@ class Broker:
     
     def __on_publish(self, client, userdata, result):
         print(f"Data published with result code {result}")
+
+    def _send_heartbeat(self):
+        heartbeat = pb2.Heartbeat()
+        self.client.publish("server/heartbeat", heartbeat.SerializeToString())
 
     def stop(self):
         self.__disable_command_receiver()

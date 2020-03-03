@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <p v-if="isConnected">We're connected to the server!</p>
-    <p>Message from server: "{{socketMessage}}"</p>
-    <button @click="clickPublish();">Publish</button>
+    <p>Server Connectivity Status: {{serverStatusMessage}}</p>
   </div>
 </template>
 
@@ -16,14 +14,33 @@ export default {
   data() {
     return {
       person: null,
+      heartrate: null,
       isConnected: false,
       socketMessage: '',
+      heartbeatDegradedModeTimeoutTimer: null,
+      heartbeatNoConnectionTimeoutTimer: null,
+      lastReceivedHeartbeat: null,
+      serverStatus: -1,
     };
   },
 
   mqtt: {
-    'param/+/+/test': function () {
-      console.log('param/+/+/test');
+    'server/heartbeat': function (msg) {
+      try {
+        this.heartbeat.decode(msg);
+
+        if (this.heartbeatTimeoutTimer) {
+          clearTimeout(this.heartbeatTimeoutTimer);
+          clearTimeout(this.heartbeatNoConnectionTimeoutTimer);
+        }
+
+        this.heartbeatTimeoutTimer = setTimeout(() => { this.updateStatus(1); }, 1500);
+        this.heartbeatNoConnectionTimeoutTimer = setTimeout(() => { this.updateStatus(-1); }, 4000);
+
+        this.updateStatus(0);
+      } catch (error) {
+        console.error('Malformed Heartrate Message from Server', error);
+      }
     },
     'param/#': function () {
       console.log('param/#');
@@ -49,12 +66,27 @@ export default {
     },
   },
 
+  computed: {
+    serverStatusMessage() {
+      switch (this.serverStatus) {
+        case 0:
+          return 'Connected';
+        case 1:
+          return 'Experiencing Connectivity Issues...';
+        default:
+          return 'Disconnected';
+      }
+    },
+  },
+
   mounted() {
+    this.$mqtt.subscribe('server/heartbeat');
     this.$mqtt.subscribe('param/param/param/test');
 
     axios({ method: 'get', url: 'json/messages.json' }).then((res) => {
       const root = protobuf.Root.fromJSON(res.data);
       this.person = root.lookupType('iot_processor.messages.Person');
+      this.heartbeat = root.lookupType('iot_processor.messages.Heartbeat');
     });
   },
 
@@ -62,6 +94,9 @@ export default {
     clickPublish() {
       const message = this.person.create({ id: 1234, name: 'sample name' });
       this.$mqtt.publish('param/param/param/test', this.person.encode(message).finish());
+    },
+    updateStatus(status) {
+      this.serverStatus = status;
     },
   },
 };

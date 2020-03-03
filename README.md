@@ -26,6 +26,9 @@ Generate protobuf files:
 
 C:\Develop\protoc-3.11.4-win64\bin\protoc.exe --proto_path .\iot_processor\messages -I C:\Develop\mtns_iot iot_processor\messages\*.proto  --python_out=iot_processor\messages
 
+Generate JSON file for web:
+.\web\client\node_modules\.bin\pbjs .\iot_processor\messages\example.proto > .\web\client\public\json\messages.json
+
 Create SystemD Service (Python)
 https://github.com/torfsen/python-systemd-tutorial
 
@@ -78,5 +81,3 @@ TODO
 ===
 * Test Tacx Ant+ USB
 * Fork PyAnt with changes to support Python 3
-* Add protobuf implementation into VueJS: https://github.com/fengxianqi/front_end-demos/tree/master/src/vue-protobuf
-
