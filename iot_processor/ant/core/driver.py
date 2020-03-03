@@ -149,7 +149,8 @@ class USB1Driver(Driver):
 
 class USB2Driver(Driver):
     def _open(self):
-        # Most of this is straight from the PyUSB example documentation		
+        # Most of this is straight from the PyUSB example documentation
+        # TODO: need to support multiple Ant+ devices	
         dev = usb.core.find(idVendor=0x0fcf, idProduct=0x1008)
 
         if dev is None:

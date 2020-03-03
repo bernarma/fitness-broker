@@ -21,6 +21,7 @@ TODO
 ** Implement BTLE and ANT+ (support for HRM, Cadence, Speed, Power, ANT-FEC, FTMS) **
 ** Test Tacx Ant+ USB
 ** Fork PyAnt with changes to support Python 3
+** Implement Ant+ over Bluetooth for Tacx Trainers: https://github.com/abellono/tacx-ios-bluetooth-example
 
 Generate protobuf files:
 
