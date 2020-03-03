@@ -19,12 +19,17 @@ class Broker:
     def port(self):
             return self._port
 
-    def __init__(self, hostname, port):
+    @property
+    def num_workers(self):
+            return self._num_workers
+
+    def __init__(self, hostname, port, num_workers):
         self._hostname = hostname
         self._port = port
-        self._queue = queue.Queue()
+        self._queue = queue.Queue(maxsize=0)
         self._client = mqtt.Client()
         self._connected = False
+        self._num_workers = num_workers
 
     def __connect_mqtt_broker(self):
         self.client.connect(self.hostname, self.port, 60)
@@ -82,14 +87,15 @@ class Broker:
         self._client.disconnect()
         
         while self._connected: # wait until disconnected
-            time.sleep(1)
+            time.sleep(.1)
 
     def start(self):
-        # spawn worker thread to process command queue
-        t = Thread(target=self.__worker)
-        t.daemon = True
-        t.start()
-
+        # spawn worker threads to process command queue
+        for _ in range(self._num_workers):
+            worker = Thread(target=self.__worker)
+            worker.daemon = True
+            worker.start()
+  
         self.client.on_connect = self.__on_connect
         self.client.on_message = self.__on_message
         self.client.on_disconnect = self.__on_disconnect
