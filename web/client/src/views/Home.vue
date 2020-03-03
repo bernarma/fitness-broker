@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <p>Broker Connectivity Status: {{brokerStatusMessage}}</p>
     <p>Server Connectivity Status: {{serverStatusMessage}}</p>
   </div>
 </template>
@@ -20,6 +21,7 @@ export default {
       heartbeatDegradedModeTimeoutTimer: null,
       heartbeatNoConnectionTimeoutTimer: null,
       lastReceivedHeartbeat: null,
+      brokerStatus: this.$mqtt.connected,
       serverStatus: -1,
     };
   },
@@ -77,9 +79,22 @@ export default {
           return 'Disconnected';
       }
     },
+    brokerStatusMessage() {
+      if (this.brokerStatus) return 'Connected';
+
+      return 'Disconnected';
+    },
   },
 
   mounted() {
+    this.$mqtt.on('offline', () => {
+      this.brokerStatus = this.$mqtt.connected;
+    });
+
+    this.$mqtt.on('connect', () => {
+      this.brokerStatus = this.$mqtt.connected;
+    });
+
     this.$mqtt.subscribe('server/heartbeat');
     this.$mqtt.subscribe('param/param/param/test');
 

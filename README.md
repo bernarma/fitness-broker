@@ -18,9 +18,9 @@ TODO
 ** Create systemd Service **
 ** Create Web Application based on Vue.js to listen to the MQTT Websocket **
 ** Add protobuf commands to start and shutdown the processing loop **
-** Add configuration file for mosquitto to listen for MQTT and websocket traffic **
 ** Implement BTLE and ANT+ (support for HRM, Cadence, Speed, Power, ANT-FEC, FTMS) **
-
+** Test Tacx Ant+ USB
+** Fork PyAnt with changes to support Python 3
 
 Generate protobuf files:
 
@@ -77,7 +77,3 @@ https://www.instructables.com/id/Using-Zwift-With-Nearly-Any-Fitness-Device/
 
 In JS Client - to generate PBJS files - .\node_modules\.bin\pbjs
 
-TODO
-===
-* Test Tacx Ant+ USB
-* Fork PyAnt with changes to support Python 3
