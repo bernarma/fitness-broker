@@ -18,13 +18,16 @@ TODO
 ** Create systemd Service **
 ** Create Web Application based on Vue.js to listen to the MQTT Websocket **
 ** Add protobuf commands to start and shutdown the processing loop **
-** Add configuration file for mosquitto to listen for MQTT and websocket traffic **
 ** Implement BTLE and ANT+ (support for HRM, Cadence, Speed, Power, ANT-FEC, FTMS) **
-
+** Test Tacx Ant+ USB
+** Fork PyAnt with changes to support Python 3
 
 Generate protobuf files:
 
 C:\Develop\protoc-3.11.4-win64\bin\protoc.exe --proto_path .\iot_processor\messages -I C:\Develop\mtns_iot iot_processor\messages\*.proto  --python_out=iot_processor\messages
+
+Generate JSON file for web:
+.\web\client\node_modules\.bin\pbjs .\iot_processor\messages\example.proto > .\web\client\public\json\messages.json
 
 Create SystemD Service (Python)
 https://github.com/torfsen/python-systemd-tutorial
@@ -128,6 +131,14 @@ Mosquitto on Raspberry PI
 - https://theembeddedlab.com/tutorials/install-mosquitto-on-a-raspberry-pi/
 
 
-TODO
-===
-* Test Tacx Ant+ USB
+Allow RemoteSigned Scripts - PS1
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+For now this is not needed - NodeGyp (possibly need when creating website/dashboard)
+https://github.com/nodejs/node-gyp#on-windows
+
+See for permissions to access ANT+ USB and project to use GPIO in RPI+
+https://www.instructables.com/id/Using-Zwift-With-Nearly-Any-Fitness-Device/
+
+In JS Client - to generate PBJS files - .\node_modules\.bin\pbjs
+

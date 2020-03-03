@@ -18,7 +18,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='iot_processor.messages',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=b'\n\rexample.proto\x12\x16iot_processor.messages\"\xf1\x01\n\x06Person\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12:\n\x06phones\x18\x04 \x03(\x0b\x32*.iot_processor.messages.Person.PhoneNumber\x1aU\n\x0bPhoneNumber\x12\x0e\n\x06number\x18\x01 \x01(\t\x12\x36\n\x04type\x18\x02 \x01(\x0e\x32(.iot_processor.messages.Person.PhoneType\"+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02\"=\n\x0b\x41\x64\x64ressBook\x12.\n\x06people\x18\x01 \x03(\x0b\x32\x1e.iot_processor.messages.Personb\x06proto3'
+  serialized_pb=b'\n\rexample.proto\x12\x16iot_processor.messages\"\xf1\x01\n\x06Person\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\n\n\x02id\x18\x02 \x01(\x05\x12\r\n\x05\x65mail\x18\x03 \x01(\t\x12:\n\x06phones\x18\x04 \x03(\x0b\x32*.iot_processor.messages.Person.PhoneNumber\x1aU\n\x0bPhoneNumber\x12\x0e\n\x06number\x18\x01 \x01(\t\x12\x36\n\x04type\x18\x02 \x01(\x0e\x32(.iot_processor.messages.Person.PhoneType\"+\n\tPhoneType\x12\n\n\x06MOBILE\x10\x00\x12\x08\n\x04HOME\x10\x01\x12\x08\n\x04WORK\x10\x02\"=\n\x0b\x41\x64\x64ressBook\x12.\n\x06people\x18\x01 \x03(\x0b\x32\x1e.iot_processor.messages.Person\"\x0b\n\tHeartbeatb\x06proto3'
 )
 
 
@@ -170,6 +170,30 @@ _ADDRESSBOOK = _descriptor.Descriptor(
   serialized_end=346,
 )
 
+
+_HEARTBEAT = _descriptor.Descriptor(
+  name='Heartbeat',
+  full_name='iot_processor.messages.Heartbeat',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=348,
+  serialized_end=359,
+)
+
 _PERSON_PHONENUMBER.fields_by_name['type'].enum_type = _PERSON_PHONETYPE
 _PERSON_PHONENUMBER.containing_type = _PERSON
 _PERSON.fields_by_name['phones'].message_type = _PERSON_PHONENUMBER
@@ -177,6 +201,7 @@ _PERSON_PHONETYPE.containing_type = _PERSON
 _ADDRESSBOOK.fields_by_name['people'].message_type = _PERSON
 DESCRIPTOR.message_types_by_name['Person'] = _PERSON
 DESCRIPTOR.message_types_by_name['AddressBook'] = _ADDRESSBOOK
+DESCRIPTOR.message_types_by_name['Heartbeat'] = _HEARTBEAT
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 Person = _reflection.GeneratedProtocolMessageType('Person', (_message.Message,), {
@@ -200,6 +225,13 @@ AddressBook = _reflection.GeneratedProtocolMessageType('AddressBook', (_message.
   # @@protoc_insertion_point(class_scope:iot_processor.messages.AddressBook)
   })
 _sym_db.RegisterMessage(AddressBook)
+
+Heartbeat = _reflection.GeneratedProtocolMessageType('Heartbeat', (_message.Message,), {
+  'DESCRIPTOR' : _HEARTBEAT,
+  '__module__' : 'example_pb2'
+  # @@protoc_insertion_point(class_scope:iot_processor.messages.Heartbeat)
+  })
+_sym_db.RegisterMessage(Heartbeat)
 
 
 # @@protoc_insertion_point(module_scope)

@@ -7,7 +7,7 @@ class Application:
     def __init__(self, options):
         signal.signal( signal.SIGINT, lambda signal, frame: self._signal_handler() )
         self.terminated = False
-        self.broker = Broker(hostname = options.mqtt_host, port = options.mqtt_port)
+        self.broker = Broker(hostname = options.mqtt_host, port = options.mqtt_port, num_workers = options.workers)
 
     def _signal_handler(self):
         self.terminated = True

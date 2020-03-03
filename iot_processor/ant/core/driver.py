@@ -7,8 +7,7 @@ import usb.core
 import usb.util
 
 from .exceptions import DriverError
-
-from array import *
+from array import array
 
 
 class Driver(object):
@@ -62,6 +61,7 @@ class Driver(object):
 
             if self.debug:
                 self._dump(data, 'READ')
+                
         finally:
             self._lock.release()
 

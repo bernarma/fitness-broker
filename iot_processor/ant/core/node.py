@@ -3,7 +3,7 @@ import _thread
 import uuid
 
 from .constants import *
-from .exceptions import *
+from .exceptions import ChannelError, NodeError
 from . import message
 from . import event
 
