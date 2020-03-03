@@ -1,8 +1,4 @@
-import queue
 import logging
-import sys
-import signal
-import time
 import configargparse
 from iot_processor.application import Application
 
