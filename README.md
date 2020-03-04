@@ -13,15 +13,36 @@ Before running the test - start mosquitto (assume it's localhost 1883)
 
 Ubuntu: install "mosquitto" package
 
-TODO
+TODO (ALL)
 ---
-** Create systemd Service **
-** Create Web Application based on Vue.js to listen to the MQTT Websocket **
-** Add protobuf commands to start and shutdown the processing loop **
-** Implement BTLE and ANT+ (support for HRM, Cadence, Speed, Power, ANT-FEC, FTMS) **
-** Test Tacx Ant+ USB
-** Fork PyAnt with changes to support Python 3
+** Automated Build/Deployment to RaspberryPI
+    - Build Raspbian img
+    - ???
+
+TODO (IOT SERVER)
+---
+** Add Bluetooth Controller (support for multiple???)
+** Add ANT+ Controller (support for multiple???)
+** Integrate Controller into Event Loop
+** Add commands: Start/Stop Processing Loop, Discover Devices (BT & ANT+)
+** Create systemd Service
+** Add Coverage.py (unit testing)
+** Fork PyAnt with changes to support Python 3 (contribute modifications)
+** Implement BTLE and ANT+ (support for HRM, Cadence, Speed, Power, ANT-FEC, FTMS)
 ** Implement Ant+ over Bluetooth for Tacx Trainers: https://github.com/abellono/tacx-ios-bluetooth-example
+** Test Tacx Ant+ USB
+
+TODO (SERVER)
+---
+** No activities required yet **
+
+TODO (WEB)
+---
+** Mockup Device Pairing Dashboard
+** Mockup Workout Dashboard
+** Create Unit Tests for Vue.js APP
+** Create Command Generator (in JS unit tests)
+
 
 Generate protobuf files:
 
