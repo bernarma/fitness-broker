@@ -8,7 +8,7 @@ class DriverError(ANTException):
 
 class MessageError(ANTException):
     def __init__(self, msg, internal=''):
-        Exception.__init__(self, msg)
+        super().__init__(msg)
         self.internal = internal
 
 

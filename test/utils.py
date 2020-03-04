@@ -28,8 +28,6 @@ if os.path.exists(os.path.join(parent_dir, 'usb')):
     sys.path.insert(0, parent_dir)
 
 import usb.core
-import logging
-import test.devinfo
 import time
 import unittest
 import usb._interop as _interop

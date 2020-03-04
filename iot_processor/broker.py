@@ -100,7 +100,7 @@ class Broker:
             worker = Thread(target=self.__worker)
             worker.daemon = True
             worker.start()
-  
+
         self.client.on_connect = self.__on_connect
         self.client.on_message = self.__on_message
         self.client.on_disconnect = self.__on_disconnect

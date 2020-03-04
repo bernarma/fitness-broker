@@ -270,8 +270,7 @@ class NetworkKeyMessage(Message):
         return self.getPayload()[1:]
 
     def setKey(self, key):
-        self.payload[0] + key
-        #self.payload[1:] = key # is there a cleaner way to do this?
+        self.payload = self.payload[0].to_bytes(1, byteorder='little') + key
 
 
 class TXPowerMessage(Message):
