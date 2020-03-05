@@ -1,5 +1,7 @@
 # IOT Broker
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/521c13c4f76f49e0b091b94bb18448fd)](https://app.codacy.com/manual/bernarma/pypi-fitness-broker?utm_source=github.com&utm_medium=referral&utm_content=bernarma/pypi-fitness-broker&utm_campaign=Badge_Grade_Settings)
+
 * Include Architecture Diagram of Major Components
 
 To run tests: python -m unittest test.test_main
