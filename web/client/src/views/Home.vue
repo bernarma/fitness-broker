@@ -7,6 +7,7 @@
 
 <script>
 import axios from 'axios';
+// import { mapGetters, mapState } from 'vuex'
 
 const protobuf = require('protobufjs');
 
@@ -27,7 +28,7 @@ export default {
   },
 
   mqtt: {
-    'server/heartbeat': function (msg) {
+    'server/heartbeat': function heartbeat(msg) {
       try {
         this.heartbeat.decode(msg);
 
@@ -41,34 +42,27 @@ export default {
 
         this.updateStatus(0);
       } catch (error) {
-        console.error('Malformed Heartrate Message from Server', error);
+        // console.error('Malformed Heartrate Message from Server', error);
       }
     },
-    'param/#': function () {
-      console.log('param/#');
-    },
-    'param/param/param/test': function (val) {
-      console.log(val.length);
+    'param/param/param/test': function test(val) {
       try {
-        const p1 = this.person.decode(val);
-        console.log(`param/param/param/test ${p1.id} ${p1.name}`);
+        this.person.decode(val);
+        // console.log(`param/param/param/test ${p1.id} ${p1.name}`);
       } catch (error) {
-        console.error('Invalid message', error);
-      }
-    },
-    'template/+': function (data, topic) {
-      if (topic.split('/').pop() === '12345') {
-        console.log('topic:', 'template/12345');
-      }
-    },
-    'template/+/param/param': function (data, topic) {
-      if (topic.split('/')[1] === '12345') {
-        console.log('topic:', 'template/12345/param/param');
+        // console.error('Invalid message', error);
       }
     },
   },
 
   computed: {
+    // ...mapState({
+    //   checkoutStatus: state => state.cart.checkoutStatus
+    // }),
+    // ...mapGetters('cart', {
+    //   products: 'cartProducts',
+    //   total: 'cartTotalPrice'
+    // }),
     serverStatusMessage() {
       switch (this.serverStatus) {
         case 0:
@@ -113,6 +107,9 @@ export default {
     updateStatus(status) {
       this.serverStatus = status;
     },
+    // checkout (products) {
+    //   this.$store.dispatch('cart/checkout', products)
+    // },
   },
 };
 </script>
